@@ -1,6 +1,12 @@
-BootStrap: docker
-From: rockylinux:9.3
+Bootstrap: docker
+From: fedora:43
+
 %post
-dnf install -y --setopt=install_weak_deps=False epel-release
-dnf install -y --setopt=install_weak_deps=False gcc-gnat
-rm -rf /var/cache/dnf/*
+    set -e
+    dnf install -y gcc-gnat
+    command -v gnatmake
+    dnf clean all
+
+%test
+    gnatmake --version
+
